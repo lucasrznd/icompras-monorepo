@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: db_i_compras
+    restart: always
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: 123456
+        POSTGRES_MULTIPLE_DATABASES: icomprasprodutos, icompraspedidos, icomprasclientes
+    ports:
+        - "5432:5432"
+    volumes:
+        - ./data:/var/lib/postgresql

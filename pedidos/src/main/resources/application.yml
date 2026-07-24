@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: pedidos
+  datasource:
+    url: jdbc:postgresql://localhost:5432/icompraspedidos
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 123456
+  jpa:
+    show-sql: false
+    open-in-view: false
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+
+springdoc:
+  open-api:
+    title: MS de Pedidos
+    description: Microserviço de gerenciamento de pedidos
+    version: 1.0.0
+
+icompras:
+  pedidos:
+    clients:
+      produtos:
+        url: 'http://localhost:8081/produtos'
+      clientes:
+        url: 'http://localhost:8082/clientes'
+  config:
+    kafka:
+      server-url: 'localhost:29092'
+      topics:
+        pedidos-pagos: 'icompras.pedidos-pagos'
+        pedidos-faturados: 'icompras.pedidos-faturados'
+        pedidos-enviados: 'icompras.pedidos-enviados'
+
+banco:
+  api-key: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'

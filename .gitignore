@@ -1,0 +1,21 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+
+# Database data (Postgres bind mount)
+servicos/database/data/
+
+# Backups / dumps
+*.sql.bak
+backup.sql
+
+# Logs
+*.log

@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: produtos
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/icomprasprodutos
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 123456
+  jpa:
+    show-sql: false
+    open-in-view: false
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+
+server:
+  port: 8081
+
+springdoc:
+  open-api:
+    title: MS de Produtos
+    description: Microserviço de gerenciamento de produtos
+    version: 1.0.0
