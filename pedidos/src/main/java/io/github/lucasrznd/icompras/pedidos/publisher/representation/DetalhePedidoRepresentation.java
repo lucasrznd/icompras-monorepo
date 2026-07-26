@@ -1,6 +1,6 @@
 package io.github.lucasrznd.icompras.pedidos.publisher.representation;
 
-import io.github.lucasrznd.icompras.pedidos.enums.PedidoStatus;
+import io.github.lucasrznd.icompras.common.enums.PedidoStatus;
 
 import java.math.BigDecimal;
 import java.util.List;

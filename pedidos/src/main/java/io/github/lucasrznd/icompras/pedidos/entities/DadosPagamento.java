@@ -1,6 +1,6 @@
 package io.github.lucasrznd.icompras.pedidos.entities;
 
-import io.github.lucasrznd.icompras.pedidos.enums.TipoPagamento;
+import io.github.lucasrznd.icompras.common.enums.TipoPagamento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

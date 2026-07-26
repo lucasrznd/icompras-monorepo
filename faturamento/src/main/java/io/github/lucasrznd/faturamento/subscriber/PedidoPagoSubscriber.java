@@ -2,7 +2,6 @@ package io.github.lucasrznd.faturamento.subscriber;
 
 import io.github.lucasrznd.faturamento.mapper.PedidoMapper;
 import io.github.lucasrznd.faturamento.service.GeradorNotaFiscalService;
-import io.github.lucasrznd.faturamento.service.NotaFiscalReportService;
 import io.github.lucasrznd.faturamento.subscriber.representation.DetalhePedidoRepresentation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

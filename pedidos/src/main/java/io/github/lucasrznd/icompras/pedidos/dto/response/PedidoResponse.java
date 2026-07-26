@@ -1,6 +1,6 @@
 package io.github.lucasrznd.icompras.pedidos.dto.response;
 
-import io.github.lucasrznd.icompras.pedidos.enums.PedidoStatus;
+import io.github.lucasrznd.icompras.common.enums.PedidoStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

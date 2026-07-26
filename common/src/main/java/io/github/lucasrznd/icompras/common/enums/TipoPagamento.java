@@ -1,4 +1,4 @@
-package io.github.lucasrznd.icompras.pedidos.enums;
+package io.github.lucasrznd.icompras.common.enums;
 
 public enum TipoPagamento {
     DEBIT,

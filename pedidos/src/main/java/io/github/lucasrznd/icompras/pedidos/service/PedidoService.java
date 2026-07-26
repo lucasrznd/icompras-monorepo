@@ -15,7 +15,7 @@ import io.github.lucasrznd.icompras.pedidos.dto.response.PedidoResponse;
 import io.github.lucasrznd.icompras.pedidos.entities.DadosPagamento;
 import io.github.lucasrznd.icompras.pedidos.entities.ItemPedido;
 import io.github.lucasrznd.icompras.pedidos.entities.Pedido;
-import io.github.lucasrznd.icompras.pedidos.enums.PedidoStatus;
+import io.github.lucasrznd.icompras.common.enums.PedidoStatus;
 import io.github.lucasrznd.icompras.pedidos.mapper.ItemPedidoMapper;
 import io.github.lucasrznd.icompras.pedidos.mapper.PedidoMapper;
 import io.github.lucasrznd.icompras.pedidos.publisher.PagamentoPublisher;

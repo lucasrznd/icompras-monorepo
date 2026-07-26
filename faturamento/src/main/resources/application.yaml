@@ -15,6 +15,7 @@ icompras:
     kafka:
       topics:
         pedidos-pagos: ${KAFKA_TOPIC_PEDIDOS_PAGOS:icompras.pedidos-pagos}
+        pedidos-faturados: ${KAFKA_TOPIC_PEDIDOS_FATURADOS:icompras.pedidos-faturados}
 
 springdoc:
   open-api:

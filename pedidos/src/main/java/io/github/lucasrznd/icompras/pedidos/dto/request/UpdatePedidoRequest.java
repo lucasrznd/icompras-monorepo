@@ -1,6 +1,6 @@
 package io.github.lucasrznd.icompras.pedidos.dto.request;
 
-import io.github.lucasrznd.icompras.pedidos.enums.PedidoStatus;
+import io.github.lucasrznd.icompras.common.enums.PedidoStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record UpdatePedidoRequest(
