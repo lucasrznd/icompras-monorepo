@@ -22,6 +22,7 @@
         <module>servicos</module>
         <module>pedidos</module>
         <module>faturamento</module>
+        <module>logistica</module>
     </modules>
 
     <properties>
