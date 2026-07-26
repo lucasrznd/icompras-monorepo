@@ -15,11 +15,14 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static io.github.lucasrznd.icompras.common.util.StringFormatUtil.formatCpf;
+import static io.github.lucasrznd.icompras.common.util.StringFormatUtil.formatData;
+import static io.github.lucasrznd.icompras.common.util.StringFormatUtil.formatTelefone;
 
 @Service
 @Slf4j
@@ -27,6 +30,8 @@ public class NotaFiscalReportService {
 
     @Value("classpath:report/nota-fiscal.jrxml")
     private Resource reportTemplate;
+
+    private static final DateTimeFormatter DATA_PEDIDO_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     public byte[] generateReport(PedidoResponse pedido) {
         try (InputStream inputStream = reportTemplate.getInputStream()) {
@@ -57,8 +62,6 @@ public class NotaFiscalReportService {
                 .toList();
     }
 
-    private static final DateTimeFormatter DATA_PEDIDO_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
     private static @NonNull Map<String, Object> getParameters(PedidoResponse pedido) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("NOME", pedido.cliente().nome());
@@ -69,22 +72,8 @@ public class NotaFiscalReportService {
         parameters.put("BAIRRO", pedido.cliente().numero());
         parameters.put("EMAIL", pedido.cliente().email());
         parameters.put("TELEFONE", formatTelefone(pedido.cliente().telefone()));
-        parameters.put("DATA_PEDIDO", formatDataPedido(pedido.createdAt()));
+        parameters.put("DATA_PEDIDO", formatData(pedido.createdAt(), DATA_PEDIDO_FORMATTER));
         parameters.put("TOTAL_PEDIDO", pedido.total());
         return parameters;
-    }
-
-    private static String formatDataPedido(String createdAt) {
-        return LocalDateTime.parse(createdAt.replace(" ", "T")).format(DATA_PEDIDO_FORMATTER);
-    }
-
-    private static String formatCpf(String cpf) {
-        return cpf.replaceFirst("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
-    }
-
-    private static String formatTelefone(String telefone) {
-        return telefone.length() == 11
-                ? telefone.replaceFirst("(\\d{2})(\\d{5})(\\d{4})", "($1) $2-$3")
-                : telefone.replaceFirst("(\\d{2})(\\d{4})(\\d{4})", "($1) $2-$3");
     }
 }
