@@ -1,8 +1,8 @@
 package io.github.lucasrznd.icompras.pedidos.entities;
 
 import io.github.lucasrznd.icompras.common.entity.Auditable;
-import io.github.lucasrznd.icompras.pedidos.client.representation.ClienteRepresentation;
 import io.github.lucasrznd.icompras.common.enums.PedidoStatus;
+import io.github.lucasrznd.icompras.pedidos.client.representation.ClienteRepresentation;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
