@@ -8,6 +8,6 @@ public record AtualizacaoStatusPedidoRepresentation(
         UUID id,
         PedidoStatus status,
         String urlNf,
-        String codigoRastreio
+        String codigoRastreamento
 ) {
 }

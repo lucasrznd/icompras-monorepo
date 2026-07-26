@@ -1,6 +1,7 @@
 package io.github.lucasrznd.icompras.pedidos.service;
 
 import feign.FeignException;
+import io.github.lucasrznd.icompras.common.enums.PedidoStatus;
 import io.github.lucasrznd.icompras.common.exception.BusinessException;
 import io.github.lucasrznd.icompras.common.exception.ResourceNotFoundException;
 import io.github.lucasrznd.icompras.pedidos.client.ClienteClient;
@@ -15,7 +16,6 @@ import io.github.lucasrznd.icompras.pedidos.dto.response.PedidoResponse;
 import io.github.lucasrznd.icompras.pedidos.entities.DadosPagamento;
 import io.github.lucasrznd.icompras.pedidos.entities.ItemPedido;
 import io.github.lucasrznd.icompras.pedidos.entities.Pedido;
-import io.github.lucasrznd.icompras.common.enums.PedidoStatus;
 import io.github.lucasrznd.icompras.pedidos.mapper.ItemPedidoMapper;
 import io.github.lucasrznd.icompras.pedidos.mapper.PedidoMapper;
 import io.github.lucasrznd.icompras.pedidos.publisher.PagamentoPublisher;
@@ -113,7 +113,7 @@ public class PedidoService {
         }
     }
 
-    private Pedido find(UUID id) {
+    public Pedido find(UUID id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(Pedido.class, id));
     }
