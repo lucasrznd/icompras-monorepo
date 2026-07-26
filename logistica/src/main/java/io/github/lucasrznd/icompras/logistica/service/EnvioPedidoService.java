@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-import java.util.random.RandomGenerator;
-import java.util.stream.Collectors;
+
+import static io.github.lucasrznd.icompras.logistica.utils.TrackingUtil.generateTrackingCode;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +16,7 @@ public class EnvioPedidoService {
 
     private final EnvioPedidoPublisher publisher;
 
-    public void send(UUID id){
+    public void send(UUID id) {
         var atualizacaoRepresentation = new CreateAtualizacaoEnvioPedidoRequest(
                 id,
                 PedidoStatus.ENVIADO,
@@ -24,17 +24,5 @@ public class EnvioPedidoService {
         );
 
         publisher.send(atualizacaoRepresentation);
-    }
-
-    private String generateTrackingCode() {
-        RandomGenerator random = RandomGenerator.getDefault();
-
-        String letters = random.ints(2, 'A', 'Z' + 1)
-                .mapToObj(i -> String.valueOf((char) i))
-                .collect(Collectors.joining());
-
-        int number = random.nextInt(100_000_000, 1_000_000_000);
-
-        return letters + number + "BR";
     }
 }
