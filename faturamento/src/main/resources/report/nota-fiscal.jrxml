@@ -1,0 +1,211 @@
+<!-- Refactored to match "Report UI redesign/Nota Fiscal.dc.html" -->
+<jasperReport name="nota-fiscal" language="java" pageWidth="612" pageHeight="792" columnWidth="510" leftMargin="51"
+              rightMargin="51" topMargin="48" bottomMargin="36" uuid="4c57712b-e417-432a-8afe-dd1542fa08e5">
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+    <parameter name="NOME" class="java.lang.String"/>
+    <parameter name="CPF" class="java.lang.String"/>
+    <parameter name="LOGRADOURO" class="java.lang.String"/>
+    <parameter name="NUMERO" class="java.lang.String"/>
+    <parameter name="BAIRRO" class="java.lang.String"/>
+    <parameter name="EMAIL" class="java.lang.String"/>
+    <parameter name="TELEFONE" class="java.lang.String"/>
+    <parameter name="DATA_PEDIDO" class="java.lang.String"/>
+    <parameter name="TOTAL_PEDIDO" class="java.math.BigDecimal"/>
+    <query language="sql"><![CDATA[]]></query>
+    <field name="id" class="java.lang.Long"/>
+    <field name="nome" class="java.lang.String"/>
+    <field name="quantidade" class="java.lang.Integer"/>
+    <field name="valorUnitario" class="java.math.BigDecimal"/>
+    <field name="total" class="java.math.BigDecimal"/>
+
+    <title height="176" splitType="Stretch">
+        <element kind="staticText" x="0" y="0" width="300" height="11" fontName="SansSerif" fontSize="8.0"
+                 bold="true" forecolor="#6366F1">
+            <text><![CDATA[DOCUMENTO FISCAL]]></text>
+        </element>
+        <element kind="staticText" x="0" y="12" width="300" height="32" fontName="SansSerif" fontSize="25.0"
+                 bold="true" forecolor="#0F172A">
+            <text><![CDATA[Nota Fiscal]]></text>
+        </element>
+
+        <element kind="staticText" x="300" y="0" width="210" height="9" fontName="SansSerif" fontSize="7.0"
+                 bold="true" forecolor="#94A3B8" hTextAlign="Right">
+            <text><![CDATA[DATA DE EMISSÃO]]></text>
+        </element>
+        <element kind="textField" x="300" y="10" width="210" height="14" fontName="Monospaced" fontSize="11.0"
+                 forecolor="#0F172A" hTextAlign="Right">
+            <expression><![CDATA[$P{DATA_PEDIDO}]]></expression>
+        </element>
+        <element kind="staticText" x="300" y="27" width="210" height="9" fontName="SansSerif" fontSize="7.0"
+                 bold="true" forecolor="#94A3B8" hTextAlign="Right">
+            <text><![CDATA[ITENS]]></text>
+        </element>
+        <element kind="textField" uuid="f1a5f5b0-0000-4000-8000-000000000001" x="300" y="36" width="210" height="14"
+                 fontName="Monospaced" fontSize="11.0" forecolor="#0F172A" hTextAlign="Right"
+                 evaluationTime="Report">
+            <expression><![CDATA[String.format("%02d", $V{REPORT_COUNT})]]></expression>
+        </element>
+
+        <element kind="rectangle" x="0" y="50" width="510" height="2" mode="Opaque" backcolor="#0F172A">
+            <pen lineWidth="0.0"/>
+        </element>
+
+        <element kind="staticText" x="0" y="68" width="300" height="10" fontName="SansSerif" fontSize="8.0"
+                 bold="true" forecolor="#94A3B8">
+            <text><![CDATA[FATURADO PARA]]></text>
+        </element>
+
+        <element kind="rectangle" x="0" y="80" width="510" height="96" radius="10" mode="Opaque"
+                 backcolor="#F8FAFC">
+            <pen lineWidth="0.75" lineColor="#EEF2F6"/>
+        </element>
+
+        <element kind="textField" x="21" y="98" width="175" height="20" fontName="SansSerif" fontSize="15.0"
+                 bold="true" forecolor="#0F172A" vTextAlign="Middle">
+            <expression><![CDATA[$P{NOME}]]></expression>
+        </element>
+        <element kind="textField" x="21" y="120" width="175" height="12" fontName="Monospaced" fontSize="10.0"
+                 forecolor="#64748B">
+            <expression><![CDATA["CPF " + $P{CPF}]]></expression>
+        </element>
+
+        <element kind="staticText" x="217" y="98" width="125" height="9" fontName="SansSerif" fontSize="7.0"
+                 bold="true" forecolor="#94A3B8">
+            <text><![CDATA[EMAIL]]></text>
+        </element>
+        <element kind="textField" x="217" y="108" width="125" height="13" fontName="SansSerif" fontSize="10.0"
+                 forecolor="#334155">
+            <expression><![CDATA[$P{EMAIL}]]></expression>
+        </element>
+        <element kind="staticText" x="217" y="130" width="125" height="9" fontName="SansSerif" fontSize="7.0"
+                 bold="true" forecolor="#94A3B8">
+            <text><![CDATA[TELEFONE]]></text>
+        </element>
+        <element kind="textField" x="217" y="140" width="125" height="13" fontName="Monospaced" fontSize="10.0"
+                 forecolor="#334155">
+            <expression><![CDATA[$P{TELEFONE}]]></expression>
+        </element>
+
+        <element kind="staticText" x="363" y="98" width="126" height="9" fontName="SansSerif" fontSize="7.0"
+                 bold="true" forecolor="#94A3B8">
+            <text><![CDATA[ENDEREÇO]]></text>
+        </element>
+        <element kind="textField" x="363" y="108" width="126" height="30" fontName="SansSerif" fontSize="10.0"
+                 forecolor="#334155">
+            <expression><![CDATA[$P{LOGRADOURO} + ", " + $P{NUMERO} + "\nBairro " + $P{BAIRRO}]]></expression>
+        </element>
+    </title>
+
+    <columnHeader height="56" splitType="Stretch">
+        <element kind="staticText" x="0" y="16" width="300" height="10" fontName="SansSerif" fontSize="8.0"
+                 bold="true" forecolor="#94A3B8">
+            <text><![CDATA[ITENS]]></text>
+        </element>
+
+        <element kind="staticText" x="0" y="30" width="34" height="18" fontName="SansSerif" fontSize="8.0"
+                 bold="true" forecolor="#64748B" vTextAlign="Bottom">
+            <text><![CDATA[#]]></text>
+        </element>
+        <element kind="staticText" x="34" y="30" width="230" height="18" fontName="SansSerif" fontSize="8.0"
+                 bold="true" forecolor="#64748B" vTextAlign="Bottom">
+            <text><![CDATA[DESCRIÇÃO]]></text>
+        </element>
+        <element kind="staticText" x="264" y="30" width="53" height="18" fontName="SansSerif" fontSize="8.0"
+                 bold="true" forecolor="#64748B" hTextAlign="Right" vTextAlign="Bottom">
+            <text><![CDATA[QTD]]></text>
+        </element>
+        <element kind="staticText" x="317" y="30" width="98" height="18" fontName="SansSerif" fontSize="8.0"
+                 bold="true" forecolor="#64748B" hTextAlign="Right" vTextAlign="Bottom">
+            <text><![CDATA[PREÇO UNIT.]]></text>
+        </element>
+        <element kind="staticText" x="415" y="30" width="95" height="18" fontName="SansSerif" fontSize="8.0"
+                 bold="true" forecolor="#64748B" hTextAlign="Right" vTextAlign="Bottom">
+            <text><![CDATA[TOTAL]]></text>
+        </element>
+
+        <element kind="rectangle" x="0" y="49" width="510" height="2" mode="Opaque" backcolor="#0F172A">
+            <pen lineWidth="0.0"/>
+        </element>
+    </columnHeader>
+
+    <detail>
+        <band height="33" splitType="Stretch">
+            <element kind="textField" x="0" y="0" width="34" height="32" fontName="Monospaced" fontSize="9.0"
+                     forecolor="#94A3B8" vTextAlign="Middle">
+                <expression><![CDATA[String.format("%02d", $F{id})]]></expression>
+            </element>
+            <element kind="textField" x="34" y="0" width="230" height="32" fontName="SansSerif" fontSize="10.5"
+                     forecolor="#0F172A" vTextAlign="Middle">
+                <expression><![CDATA[$F{nome}]]></expression>
+            </element>
+            <element kind="textField" x="264" y="0" width="53" height="32" fontName="Monospaced" fontSize="10.0"
+                     forecolor="#334155" hTextAlign="Right" vTextAlign="Middle">
+                <expression><![CDATA[$F{quantidade}]]></expression>
+            </element>
+            <element kind="textField" x="317" y="0" width="98" height="32" fontName="Monospaced" fontSize="10.0"
+                     forecolor="#334155" hTextAlign="Right" vTextAlign="Middle">
+                <expression>
+                    <![CDATA["R$ " + new java.text.DecimalFormat("#,##0.00", new java.text.DecimalFormatSymbols(new java.util.Locale("pt", "BR"))).format($F{valorUnitario})]]></expression>
+            </element>
+            <element kind="textField" x="415" y="0" width="95" height="32" fontName="Monospaced" fontSize="10.5"
+                     bold="true" forecolor="#0F172A" hTextAlign="Right" vTextAlign="Middle">
+                <expression>
+                    <![CDATA["R$ " + new java.text.DecimalFormat("#,##0.00", new java.text.DecimalFormatSymbols(new java.util.Locale("pt", "BR"))).format($F{total})]]></expression>
+            </element>
+
+            <element kind="rectangle" x="0" y="32" width="510" height="1" mode="Opaque" backcolor="#EEF2F6">
+                <pen lineWidth="0.0"/>
+            </element>
+        </band>
+    </detail>
+
+    <summary height="104" splitType="Stretch">
+        <element kind="staticText" x="190" y="8" width="160" height="14" fontName="SansSerif" fontSize="9.0"
+                 forecolor="#64748B">
+            <text><![CDATA[Subtotal]]></text>
+        </element>
+        <element kind="textField" x="350" y="8" width="160" height="14" fontName="Monospaced" fontSize="10.0"
+                 forecolor="#334155" hTextAlign="Right">
+            <expression>
+                <![CDATA["R$ " + new java.text.DecimalFormat("#,##0.00", new java.text.DecimalFormatSymbols(new java.util.Locale("pt", "BR"))).format($P{TOTAL_PEDIDO})]]></expression>
+        </element>
+
+        <element kind="staticText" x="190" y="26" width="160" height="14" fontName="SansSerif" fontSize="9.0"
+                 forecolor="#64748B">
+            <text><![CDATA[Impostos]]></text>
+        </element>
+        <element kind="staticText" x="350" y="26" width="160" height="14" fontName="SansSerif" fontSize="10.0"
+                 forecolor="#94A3B8" hTextAlign="Right">
+            <text><![CDATA[Inclusos]]></text>
+        </element>
+
+        <element kind="rectangle" x="190" y="52" width="320" height="44" radius="10" mode="Opaque"
+                 backcolor="#0F172A">
+            <pen lineWidth="0.0"/>
+        </element>
+        <element kind="staticText" x="208" y="66" width="100" height="14" fontName="SansSerif" fontSize="8.0"
+                 bold="true" forecolor="#C7D2FE" vTextAlign="Middle">
+            <text><![CDATA[TOTAL]]></text>
+        </element>
+        <element kind="textField" x="300" y="61" width="192" height="26" fontName="Monospaced" fontSize="18.0"
+                 bold="true" forecolor="#FFFFFF" hTextAlign="Right" vTextAlign="Middle">
+            <expression>
+                <![CDATA["R$ " + new java.text.DecimalFormat("#,##0.00", new java.text.DecimalFormatSymbols(new java.util.Locale("pt", "BR"))).format($P{TOTAL_PEDIDO})]]></expression>
+        </element>
+    </summary>
+
+    <pageFooter height="30" splitType="Stretch">
+        <element kind="rectangle" x="0" y="0" width="510" height="1" mode="Opaque" backcolor="#EEF2F6">
+            <pen lineWidth="0.0"/>
+        </element>
+        <element kind="staticText" x="0" y="10" width="300" height="12" fontName="SansSerif" fontSize="8.0"
+                 forecolor="#94A3B8">
+            <text><![CDATA[Este documento é uma representação da nota fiscal.]]></text>
+        </element>
+        <element kind="textField" x="210" y="10" width="300" height="12" fontName="Monospaced" fontSize="8.0"
+                 forecolor="#94A3B8" hTextAlign="Right">
+            <expression>
+                <![CDATA["Gerada em " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date())]]></expression>
+        </element>
+    </pageFooter>
+</jasperReport>
