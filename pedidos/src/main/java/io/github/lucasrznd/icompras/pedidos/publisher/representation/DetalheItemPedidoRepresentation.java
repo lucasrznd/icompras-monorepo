@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public record DetalheItemPedidoRepresentation(
         UUID produtoId,
-        String nome,
+        String nomeProduto,
         Integer quantidade,
         BigDecimal valorUnitario
 ) {

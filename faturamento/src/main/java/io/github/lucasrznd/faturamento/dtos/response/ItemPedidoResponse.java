@@ -5,9 +5,9 @@ import java.util.UUID;
 
 public record ItemPedidoResponse(
         UUID produtoId,
-        String nome,
-        BigDecimal valorUnitario,
+        String nomeProduto,
         Integer quantidade,
+        BigDecimal valorUnitario,
         BigDecimal total
 ) {
 }

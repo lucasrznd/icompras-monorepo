@@ -6,6 +6,7 @@ import java.util.UUID;
 public record ItemPedidoResponse(
         UUID id,
         UUID produtoId,
+        String nomeProduto,
         Integer quantidade,
         BigDecimal valorUnitario
 ) {
