@@ -12,8 +12,7 @@
     <parameter name="DATA_PEDIDO" class="java.lang.String"/>
     <parameter name="TOTAL_PEDIDO" class="java.math.BigDecimal"/>
     <query language="sql"><![CDATA[]]></query>
-    <field name="id" class="java.lang.Long"/>
-    <field name="nome" class="java.lang.String"/>
+    <field name="descricao" class="java.lang.String"/>
     <field name="quantidade" class="java.lang.Integer"/>
     <field name="valorUnitario" class="java.math.BigDecimal"/>
     <field name="total" class="java.math.BigDecimal"/>
@@ -132,11 +131,11 @@
         <band height="33" splitType="Stretch">
             <element kind="textField" x="0" y="0" width="34" height="32" fontName="Monospaced" fontSize="9.0"
                      forecolor="#94A3B8" vTextAlign="Middle">
-                <expression><![CDATA[String.format("%02d", $F{id})]]></expression>
+                <expression><![CDATA[String.format("%02d", $V{REPORT_COUNT})]]></expression>
             </element>
             <element kind="textField" x="34" y="0" width="230" height="32" fontName="SansSerif" fontSize="10.5"
                      forecolor="#0F172A" vTextAlign="Middle">
-                <expression><![CDATA[$F{nome}]]></expression>
+                <expression><![CDATA[$F{descricao}]]></expression>
             </element>
             <element kind="textField" x="264" y="0" width="53" height="32" fontName="Monospaced" fontSize="10.0"
                      forecolor="#334155" hTextAlign="Right" vTextAlign="Middle">

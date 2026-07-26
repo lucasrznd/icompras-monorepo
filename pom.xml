@@ -30,6 +30,7 @@
         <org.springdoc.version>3.0.3</org.springdoc.version>
         <spring-cloud.version>2025.1.1</spring-cloud.version>
         <minio.version>9.0.3</minio.version>
+        <jasperreports.version>7.0.7</jasperreports.version>
     </properties>
 
     <dependencyManagement>
