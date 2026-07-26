@@ -13,7 +13,9 @@ import io.minio.errors.MinioException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -26,17 +28,26 @@ public class BucketService {
     private final MinioClient minioClient;
     private final MinioProps props;
 
+    public FileNameResponse upload(MultipartFile file) {
+        try {
+            return upload(new CreateFileRequest(file.getOriginalFilename(), file.getContentType(), file.getBytes()));
+        } catch (IOException e) {
+            log.error("[STORAGE] Falha ao ler o arquivo enviado. {}", e.getMessage());
+            throw new StorageException("storage.error.upload");
+        }
+    }
+
     public FileNameResponse upload(CreateFileRequest request) {
         try {
             var object = PutObjectArgs.builder()
                     .bucket(props.getBucketName())
-                    .object(request.file().getOriginalFilename())
-                    .stream(request.file().getInputStream(), request.file().getSize(), -1L)
-                    .contentType(request.file().getContentType())
+                    .object(request.fileName())
+                    .stream(new ByteArrayInputStream(request.content()), (long) request.content().length, -1L)
+                    .contentType(request.contentType())
                     .build();
             minioClient.putObject(object);
-            return new FileNameResponse(request.file().getOriginalFilename());
-        } catch (MinioException | IOException e) {
+            return new FileNameResponse(request.fileName());
+        } catch (MinioException e) {
             log.error("[STORAGE] Falha ao enviar arquivo para o storage. {}", e.getMessage());
             throw new StorageException("storage.error.upload");
         }
