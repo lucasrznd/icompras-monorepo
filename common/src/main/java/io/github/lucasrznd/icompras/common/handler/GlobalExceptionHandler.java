@@ -4,6 +4,7 @@ import io.github.lucasrznd.icompras.common.exception.BusinessException;
 import io.github.lucasrznd.icompras.common.exception.InvalidApiKeyException;
 import io.github.lucasrznd.icompras.common.exception.ResourceNotFoundException;
 import io.github.lucasrznd.icompras.common.exception.StandardError;
+import io.github.lucasrznd.icompras.common.exception.StorageException;
 import io.github.lucasrznd.icompras.common.exception.ValidationException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
@@ -74,6 +75,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<StandardError> handleMissingRequestHeader(InvalidApiKeyException ex, HttpServletRequest request, Locale locale) {
         String message = resolveMessage(ex, locale);
         return buildResponse(HttpStatus.UNAUTHORIZED, message, request);
+    }
+
+    @ExceptionHandler(StorageException.class)
+    public ResponseEntity<StandardError> handleStorage(StorageException ex, HttpServletRequest request, Locale locale) {
+        String message = resolveMessage(ex, locale);
+        return buildResponse(HttpStatus.NOT_FOUND, message, request);
     }
 
     private String resolveMessage(BusinessException ex, Locale locale) {
