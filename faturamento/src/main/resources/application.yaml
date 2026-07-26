@@ -1,9 +1,20 @@
 spring:
   application:
     name: 'faturamento'
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:29092}
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP_ID:icompras-faturamento}
+      auto-offset-reset: earliest
 
 server:
   port: 8084
+
+icompras:
+  config:
+    kafka:
+      topics:
+        pedidos-pagos: ${KAFKA_TOPIC_PEDIDOS_PAGOS:icompras.pedidos-pagos}
 
 springdoc:
   open-api:
@@ -12,7 +23,7 @@ springdoc:
     version: 1.0.0
 
 minio:
-  endpoint: 'http://localhost:9000'
-  access-key: 'minioadmin'
-  secret-key: 'minioadmin'
-  bucket-name: 'icompras.faturas'
+  endpoint: ${MINIO_ENDPOINT:http://localhost:9000}
+  access-key: ${MINIO_ACCESS_KEY:minioadmin}
+  secret-key: ${MINIO_SECRET_KEY:minioadmin}
+  bucket-name: ${MINIO_BUCKET_NAME:icompras.faturas}
