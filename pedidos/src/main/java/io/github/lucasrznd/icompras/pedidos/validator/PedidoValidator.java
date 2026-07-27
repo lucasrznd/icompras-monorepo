@@ -26,7 +26,13 @@ public class PedidoValidator {
 
     private void validarProduto(CreatePedidoRequest request) {
         try {
-            request.itens().stream().map(CreateItemPedidoRequest::produtoId).forEach(produtoClient::findById);
+            request.itens().stream().map(CreateItemPedidoRequest::produtoId).forEach(produtoId -> {
+                var produto = produtoClient.findById(produtoId);
+
+                if (produto.deletedAt() != null) {
+                    throw new BusinessException("produto.inactive.deleted");
+                }
+            });
         } catch (FeignException.NotFound e) {
             throw new ResourceNotFoundException(ProdutoRepresentation.class, e.request().requestTemplate().url());
         } catch (FeignException e) {
@@ -36,11 +42,15 @@ public class PedidoValidator {
 
     private void validarCliente(CreatePedidoRequest request) {
         try {
-            clienteClient.findById(request.clienteId());
+            var cliente = clienteClient.findById(request.clienteId());
+
+            if (cliente.deletedAt() != null) {
+                throw new BusinessException("cliente.inactive.deleted");
+            }
         } catch (FeignException.NotFound e) {
             throw new ResourceNotFoundException(ClienteRepresentation.class, request.clienteId());
         } catch (FeignException e) {
-            throw new BusinessException("produto.service.unavailable");
+            throw new BusinessException("cliente.service.unavailable");
         }
     }
 }
