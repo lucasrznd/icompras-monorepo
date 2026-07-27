@@ -7,6 +7,6 @@ import java.util.UUID;
 public record CreateAtualizacaoEnvioPedidoRequest(
         UUID id,
         PedidoStatus status,
-        String codigoRastremento
+        String codigoRastreamento
 ) {
 }

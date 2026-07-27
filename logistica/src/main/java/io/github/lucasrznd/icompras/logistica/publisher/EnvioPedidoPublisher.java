@@ -24,7 +24,7 @@ public class EnvioPedidoPublisher {
         try {
             String json = objectMapper.writeValueAsString(request);
             kafkaTemplate.send(topic, "data", json);
-            log.info("[KAFKA] Pedido enviado com sucesso - Código: {}, Código de rastreio: {}", request.id(), request.codigoRastremento());
+            log.info("[KAFKA] Pedido enviado com sucesso - Código: {}, Código de rastreio: {}", request.id(), request.codigoRastreamento());
         } catch (KafkaException e) {
             throw new KafkaException("[KAFKA] Erro ao enviar mensagem para o Kafka", e);
         }
