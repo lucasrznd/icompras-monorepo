@@ -17,7 +17,7 @@ public class AtualizacaoStatusPedidoService {
         Pedido pedido = service.find(representation.id());
 
         pedido.setStatus(representation.status());
-        pedido.setUrlNf(representation.urlNf());
-        pedido.setCodigoRastreamento(representation.codigoRastreamento());
+        if (representation.urlNf() != null) pedido.setUrlNf(representation.urlNf());
+        if (representation.codigoRastreamento() != null) pedido.setCodigoRastreamento(representation.codigoRastreamento());
     }
 }
