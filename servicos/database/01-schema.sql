@@ -1,11 +1,18 @@
 CREATE
 DATABASE icomprasclientes;
 
+\connect icomprasclientes
+
 CREATE TABLE clientes
 (
     id         uuid PRIMARY KEY         DEFAULT gen_random_uuid(),
-
-
+    nome       varchar(150)   NOT NULL,
+    cpf        char(11)       NOT NULL,
+    logradouro varchar(100),
+    numero     varchar(10),
+    bairro     varchar(100),
+    email      varchar(150),
+    telefone   varchar(20),
     created_at timestamp with time zone DEFAULT now(),
     updated_at timestamp,
     updated_by uuid,
@@ -14,6 +21,8 @@ CREATE TABLE clientes
 
 CREATE
 DATABASE icomprasprodutos;
+
+\connect icomprasprodutos
 
 CREATE TABLE produtos
 (
@@ -30,6 +39,8 @@ CREATE TABLE produtos
 
 CREATE
 DATABASE icompraspedidos;
+
+\connect icompraspedidos
 
 CREATE TABLE pedido
 (
