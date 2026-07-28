@@ -228,8 +228,6 @@ Também é possível acessar `pedidos`, `produtos` e `clientes` através do gate
 | MinIO Console | http://localhost:9001 | `minioadmin` / `minioadmin` |
 | PostgreSQL | `localhost:5432` | `postgres` / `123456` |
 
-> Credenciais padrão de desenvolvimento, hardcoded no `docker-compose.yaml` — não usar em produção.
-
 ## Rodando localmente sem Docker
 
 É possível subir apenas a infraestrutura pelo Compose e rodar os serviços Java diretamente pela IDE/Maven (perfil `default`, que aponta para `localhost` em vez dos nomes de serviço do Docker):
