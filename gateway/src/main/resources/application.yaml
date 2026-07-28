@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowed-origins: "http://localhost:5173"
+                allowed-methods:
+                  - GET
+                  - POST
+                  - PUT
+                  - PATCH
+                  - DELETE
+                  - OPTIONS
+                allowed-headers: "*"
+                allow-credentials: false
+
+          routes:
+            - id: pedidos
+              uri: http://localhost:8080
+              predicates:
+                - Path=/api/pedidos/**
+              filters:
+                - StripPrefix=1
+
+            - id: produtos
+              uri: http://localhost:8081
+              predicates:
+                - Path=/api/produtos/**
+              filters:
+                - StripPrefix=1
+
+            - id: clientes
+              uri: http://localhost:8082
+              predicates:
+                - Path=/api/clientes/**
+              filters:
+                - StripPrefix=1
+
+            - id: faturamento
+              uri: http://localhost:8084
+              predicates:
+                - Path=/api/buckets/**
+              filters:
+                - StripPrefix=1
+
+server:
+  port: 8090

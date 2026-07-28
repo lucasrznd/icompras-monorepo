@@ -23,6 +23,7 @@
         <module>pedidos</module>
         <module>faturamento</module>
         <module>logistica</module>
+        <module>gateway</module>
     </modules>
 
     <properties>
