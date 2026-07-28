@@ -1,0 +1,9 @@
+**/target/
+**/.idea/
+**/*.iml
+.git/
+.idea/
+.vscode/
+servicos/database/data/
+*.log
+.DS_Store

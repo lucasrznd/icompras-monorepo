@@ -1,0 +1,178 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: db_i_compras
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./servicos/database/data:/var/lib/postgresql
+      - ./servicos/database/01-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./servicos/database/02-seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.12
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEPEER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.12
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "29092:29092"
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9092"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    ports:
+      - "8083:8080"
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000" # API
+      - "9001:9001" # UI
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  produtos:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: produtos
+    container_name: produtos
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/icomprasprodutos
+    ports:
+      - "8081:8081"
+
+  clientes:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: clientes
+    container_name: clientes
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/icomprasclientes
+    ports:
+      - "8082:8082"
+
+  pedidos:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: pedidos
+    container_name: pedidos
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      produtos:
+        condition: service_started
+      clientes:
+        condition: service_started
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/icompraspedidos
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      ICOMPRAS_PEDIDOS_CLIENTS_PRODUTOS_URL: http://produtos:8081/produtos
+      ICOMPRAS_PEDIDOS_CLIENTS_CLIENTES_URL: http://clientes:8082/clientes
+    ports:
+      - "8080:8080"
+
+  faturamento:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: faturamento
+    container_name: faturamento
+    depends_on:
+      kafka:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      MINIO_ENDPOINT: http://minio:9000
+    ports:
+      - "8084:8084"
+
+  logistica:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: logistica
+    container_name: logistica
+    depends_on:
+      kafka:
+        condition: service_healthy
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    ports:
+      - "8085:8085"
+
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: gateway
+    container_name: gateway
+    depends_on:
+      pedidos:
+        condition: service_started
+      produtos:
+        condition: service_started
+      clientes:
+        condition: service_started
+      faturamento:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8090:8090"
